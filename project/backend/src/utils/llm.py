@@ -1,0 +1,23 @@
+from groq import Groq
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+def ask_llm(prompt, user_question):
+
+    completion = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",  
+        messages=[
+            {"role": "system", "content": prompt}, 
+            {"role": "user", "content": user_question}
+        ],
+        temperature=0,     
+        max_tokens=300,
+        top_p=1
+    )
+
+    return completion.choices[0].message.content
