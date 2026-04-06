@@ -2,6 +2,9 @@
 Antes de ejecutar asegurarse de crear un entrono virtual (python -m venv venv) ademas de activarlo (venv\Scripts\activate), luego descargar las librerias que estan en requirements.txt (pip install -r requirements.txt)
 y listo sigue los demas pasos.
 
+## Antes de levantar
+**crear archivo .env en capeta /project y copiar credenciales adjuntas, si no funciona la api de groq se recomienda cambiar la api key por por una nueva devido al limite de uso de token**
+
 ## levantar el contenedor
 **Asegurarse de estar situado en la carpeta de project/docker**
 docker-compose up -d **Levantar todo -imagen e entorno -containe**
