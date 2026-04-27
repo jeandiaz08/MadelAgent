@@ -14,5 +14,19 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
 
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: madel_app
+    depends_on:
+      - db
+    ports:
+      - "8501:8501"
+    volumes:
+      - ..:/app
+    env_file:
+      - ../.env
+
 volumes:
   postgres_data:

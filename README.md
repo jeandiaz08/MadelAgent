@@ -37,10 +37,92 @@ Respuesta en lenguaje natural
 - Docker
 - Groq (LLM)
 
-## Instalación
-
+# Instalación
+## Antes de levantar
+crear archivo .env en capeta /project y copiar credenciales adjuntas, si no funciona la api de groq se recomienda cambiar la api key por por una nueva devido al limite de uso de token
 ```bash
-git clone repo
-cd project
-python -m venv venv
-pip install -r requirements.txt
+POSTGRES_DB=madel_db
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin123
+POSTGRES_PORT=5432
+DB_HOST=db
+DB_NAME=madel_db
+DB_USER=admin
+DB_PASSWORD=admin123
+DB_PORT=5432
+GROQ_API_KEY=(nueva api creada en GROQ)
+```
+## Pasos para ejecutar e instalar el proyecto
+```bash
+git clone ""https://github.com/jeandiaz08/MadelAgent.git""
+cd project/docker
+docker-compose down -v
+docker-compose up --build
+```
+
+## Ejecución del proyecto
+
+Este proyecto está dockerizado, por lo que **NO es necesario crear entorno virtual ni instalar librerías manualmente**.
+
+---
+
+## levantar el contenedor
+
+**Asegurarse de estar situado en la carpeta:**
+
+project/docker
+
+---
+
+**Levantar todo (base de datos + aplicación + librerías):**
+
+docker-compose up --build
+
+---
+
+## si ya se ejecutó antes (reiniciar limpio)
+
+docker-compose down -v
+docker-compose up --build
+
+---
+
+## acceder al sistema
+
+Abrir en el navegador:
+
+http://localhost:8501
+
+---
+
+## comprobar que funciona la base de datos
+
+docker ps (Ver contenedores activos)
+
+---
+
+**Entrar a PostgreSQL:**
+
+docker exec -it madel_postgres psql -U admin -d madel_db
+
+---
+
+**Ver tablas:**
+
+\dt
+
+---
+
+## probar backend (opcional)
+
+Solo para test interno:
+
+python -m core.main
+
+---
+
+## extras
+
+- Ctrl + D → salir de PostgreSQL
+- Asegurarse de que Docker esté encendido
+- No es necesario usar venv
