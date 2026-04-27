@@ -37,10 +37,76 @@ Respuesta en lenguaje natural
 - Docker
 - Groq (LLM)
 
-## Instalación
+# Instalación
 
-```bash
+**Pasos para ejecutar e instalar el proyecto**
 git clone repo
-cd project
-python -m venv venv
-pip install -r requirements.txt
+cd project/docker
+
+
+## Ejecución del proyecto
+
+Este proyecto está dockerizado, por lo que **NO es necesario crear entorno virtual ni instalar librerías manualmente**.
+
+---
+
+## levantar el contenedor
+
+**Asegurarse de estar situado en la carpeta:**
+
+project/docker
+
+---
+
+**Levantar todo (base de datos + aplicación + librerías):**
+
+docker-compose up --build
+
+---
+
+## si ya se ejecutó antes (reiniciar limpio)
+
+docker-compose down -v
+docker-compose up --build
+
+---
+
+## acceder al sistema
+
+Abrir en el navegador:
+
+http://localhost:8501
+
+---
+
+## comprobar que funciona la base de datos
+
+docker ps (Ver contenedores activos)
+
+---
+
+**Entrar a PostgreSQL:**
+
+docker exec -it madel_postgres psql -U admin -d madel_db
+
+---
+
+**Ver tablas:**
+
+\dt
+
+---
+
+## probar backend (opcional)
+
+Solo para test interno:
+
+python -m core.main
+
+---
+
+## extras
+
+- Ctrl + D → salir de PostgreSQL
+- Asegurarse de que Docker esté encendido
+- No es necesario usar venv

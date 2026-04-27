@@ -1,3 +1,78 @@
+# V1.1 (26/4/2026) ACTUAL
+
+## Ejecución del proyecto
+
+Este proyecto está dockerizado, por lo que **NO es necesario crear entorno virtual ni instalar librerías manualmente**.
+
+---
+
+## levantar el contenedor
+
+**Asegurarse de estar situado en la carpeta:**
+
+project/docker
+
+---
+
+**Levantar todo (base de datos + aplicación + librerías):**
+
+docker-compose up --build
+
+---
+
+## si ya se ejecutó antes (reiniciar limpio)
+
+docker-compose down -v
+docker-compose up --build
+
+---
+
+## acceder al sistema
+
+Abrir en el navegador:
+
+http://localhost:8501
+
+---
+
+## comprobar que funciona la base de datos
+
+docker ps (Ver contenedores activos)
+
+---
+
+**Entrar a PostgreSQL:**
+
+docker exec -it madel_postgres psql -U admin -d madel_db
+
+---
+
+**Ver tablas:**
+
+\dt
+
+---
+
+## probar backend (opcional)
+
+Solo para test interno:
+
+python -m core.main
+
+---
+
+## extras
+
+- Ctrl + D → salir de PostgreSQL
+- Asegurarse de que Docker esté encendido
+- No es necesario usar venv
+
+
+
+
+
+
+# V1.0 (1/4/2026)
 ## Ejecución del proyecto
 Antes de ejecutar asegurarse de crear un entrono virtual (python -m venv venv) ademas de activarlo (venv\Scripts\activate), luego descargar las librerias que estan en requirements.txt (pip install -r requirements.txt)
 y listo sigue los demas pasos.
@@ -30,3 +105,4 @@ docker exec -it madel_postgres psql -U admin -d madel_db #conectarse a las tabla
 
 ## extras
 ctl + d para salir del terminal
+
