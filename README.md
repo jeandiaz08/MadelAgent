@@ -38,11 +38,27 @@ Respuesta en lenguaje natural
 - Groq (LLM)
 
 # Instalación
-
-**Pasos para ejecutar e instalar el proyecto**
-git clone repo
+## Antes de levantar
+crear archivo .env en capeta /project y copiar credenciales adjuntas, si no funciona la api de groq se recomienda cambiar la api key por por una nueva devido al limite de uso de token
+```bash
+POSTGRES_DB=madel_db
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin123
+POSTGRES_PORT=5432
+DB_HOST=db
+DB_NAME=madel_db
+DB_USER=admin
+DB_PASSWORD=admin123
+DB_PORT=5432
+GROQ_API_KEY=(nueva api creada en GROQ)
+```
+## Pasos para ejecutar e instalar el proyecto
+```bash
+git clone ""https://github.com/jeandiaz08/MadelAgent.git""
 cd project/docker
-
+docker-compose down -v
+docker-compose up --build
+```
 
 ## Ejecución del proyecto
 
