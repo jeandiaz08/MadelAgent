@@ -1,17 +1,77 @@
 [
   {
-    "question": "¿Cuánto stock hay en Plaza Sur?",
-    "expected_sql": "SELECT SUM(i.stock) FROM inventario i JOIN sucursales s ON i.sucursal_id = s.id WHERE s.nombre = 'Plaza Sur';",
-    "expected_answer": "230" 
+    "question": "Cuanto stock hay en Plaza Sur?",
+    "expected_sql": "SELECT SUM(i.stock) FROM inventario i JOIN sucursales s ON i.sucursal_id = s.id WHERE s.nombre ILIKE '%Plaza Sur%';",
+    "expected_answer": "230"
   },
   {
-    "question": "¿Qué productos hay en inventario?",
+    "question": "Que productos hay en inventario?",
     "expected_sql": "SELECT nombre FROM productos;",
-    "expected_answer": "Helado Vainilla" 
+    "expected_answer": "Helado Vainilla"
   },
   {
-    "question": "¿Cuántos empleados hay?",
+    "question": "Cuantos empleados hay?",
     "expected_sql": "SELECT COUNT(*) FROM empleados;",
     "expected_answer": "6"
+  },
+  {
+    "question": "Que productos estan bajo stock minimo?",
+    "expected_sql": "SELECT p.nombre, s.nombre, i.stock, i.stock_minimo FROM inventario i JOIN productos p ON p.id = i.producto_id JOIN sucursales s ON s.id = i.sucursal_id WHERE i.stock <= i.stock_minimo;",
+    "expected_answer": "Helado Chocolate"
+  },
+  {
+    "question": "Cual es el total vendido historico?",
+    "expected_sql": "SELECT SUM(total) FROM ventas;",
+    "expected_answer": "3388000"
+  },
+  {
+    "question": "Cual fue el mes con mas ventas?",
+    "expected_sql": "SELECT DATE_TRUNC('month', fecha)::date AS mes, SUM(total) FROM ventas GROUP BY mes ORDER BY SUM(total) DESC LIMIT 1;",
+    "expected_answer": "2024-12"
+  },
+  {
+    "question": "Que producto se vendio mas en unidades?",
+    "expected_sql": "SELECT p.nombre, SUM(dv.cantidad) FROM detalle_venta dv JOIN productos p ON p.id = dv.producto_id GROUP BY p.nombre ORDER BY SUM(dv.cantidad) DESC LIMIT 1;",
+    "expected_answer": "Cono Simple"
+  },
+  {
+    "question": "Cuanto vendio Casa Central en 2025?",
+    "expected_sql": "SELECT SUM(v.total) FROM ventas v JOIN sucursales s ON s.id = v.sucursal_id WHERE s.nombre ILIKE '%Casa Central%' AND EXTRACT(YEAR FROM v.fecha) = 2025;",
+    "expected_answer": "516000"
+  },
+  {
+    "question": "Que sucursal tiene mas ingresos por ventas?",
+    "expected_sql": "SELECT s.nombre, SUM(v.total) FROM ventas v JOIN sucursales s ON s.id = v.sucursal_id GROUP BY s.nombre ORDER BY SUM(v.total) DESC LIMIT 1;",
+    "expected_answer": "Casa Central"
+  },
+  {
+    "question": "Cuantos pedidos estan pendientes?",
+    "expected_sql": "SELECT COUNT(*) FROM pedidos WHERE estado ILIKE '%pendiente%';",
+    "expected_answer": "2"
+  },
+  {
+    "question": "Que proveedor tiene mas pedidos?",
+    "expected_sql": "SELECT pr.nombre, COUNT(*) FROM pedidos pe JOIN proveedores pr ON pr.id = pe.proveedor_id GROUP BY pr.nombre ORDER BY COUNT(*) DESC LIMIT 1;",
+    "expected_answer": "Proveedor Uno"
+  },
+  {
+    "question": "Cuantas unidades se vendieron de Helado Mango?",
+    "expected_sql": "SELECT SUM(dv.cantidad) FROM detalle_venta dv JOIN productos p ON p.id = dv.producto_id WHERE p.nombre ILIKE '%Mango%';",
+    "expected_answer": "252"
+  },
+  {
+    "question": "Que meses muestran mayor demanda de helados?",
+    "expected_sql": "SELECT DATE_TRUNC('month', v.fecha)::date, SUM(dv.cantidad) FROM ventas v JOIN detalle_venta dv ON dv.venta_id = v.id JOIN productos p ON p.id = dv.producto_id WHERE p.categoria ILIKE '%Helados%' GROUP BY 1 ORDER BY SUM(dv.cantidad) DESC LIMIT 3;",
+    "expected_answer": "enero, febrero y diciembre"
+  },
+  {
+    "question": "Cuantos movimientos de inventario tipo salida existen?",
+    "expected_sql": "SELECT COUNT(*) FROM movimientos_inventario WHERE tipo ILIKE '%salida%';",
+    "expected_answer": "2"
+  },
+  {
+    "question": "Genera un reporte de KPIs generales",
+    "expected_sql": "Reporte KPI usando ventas, detalle_venta e inventario",
+    "expected_answer": "ventas totales, unidades vendidas y productos bajo stock"
   }
 ]

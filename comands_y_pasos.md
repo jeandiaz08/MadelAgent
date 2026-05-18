@@ -1,4 +1,25 @@
-# V1.1 (26/4/2026) ACTUAL
+# V1.2 (EP2) ACTUAL
+
+## Cambios principales
+
+- Agente con herramientas declaradas mediante LangChain.
+- Memoria corta en Streamlit y memoria persistente en PostgreSQL.
+- Recuperacion de contexto para preguntas de seguimiento.
+- Estimacion de tokens y costo teorico por consulta.
+- Tablas historicas de ventas para KPIs y analisis de demanda.
+- Pestana de observabilidad en la aplicacion.
+
+## Importante si ya se ejecuto antes
+
+Como se agregaron nuevas tablas (`ventas`, `detalle_venta`, `conversation_memory`, `llm_usage`) y una columna nueva en `inventario`, se recomienda reiniciar volumen:
+
+```bash
+cd project/docker
+docker-compose down -v
+docker-compose up --build
+```
+
+# V1.1 (26/4/2026)
 
 ## Ejecución del proyecto
 
