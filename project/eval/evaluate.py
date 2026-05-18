@@ -48,7 +48,7 @@ def evaluate():
 
         print(f"Pregunta: {question}")
         
-        response = run_agent(question)
+        response = run_agent(question, session_id="evaluation")
         
         is_correct = llm_judge(question, expected, response)
         
