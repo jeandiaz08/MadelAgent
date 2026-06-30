@@ -1,5 +1,21 @@
 from core.db.connection import get_connection
 
+
+def _deduplicate_columns(columns):
+    seen = {}
+    unique_columns = []
+
+    for column in columns:
+        count = seen.get(column, 0)
+        if count == 0:
+            unique_columns.append(column)
+        else:
+            unique_columns.append(f"{column}_{count + 1}")
+        seen[column] = count + 1
+
+    return unique_columns
+
+
 def execute_query(query: str):
     try:
         conn = get_connection()
@@ -7,7 +23,7 @@ def execute_query(query: str):
         
         cursor.execute(query)
         
-        columns = [desc[0] for desc in cursor.description]
+        columns = _deduplicate_columns([desc[0] for desc in cursor.description])
         
         results = cursor.fetchall()
         
