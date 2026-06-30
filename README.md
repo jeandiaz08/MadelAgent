@@ -1,4 +1,4 @@
-# MadelAgent
+# MadelAgent V1.3
 
 Agente inteligente para consultar y analizar datos operacionales de la empresa MADEL mediante lenguaje natural.
 
