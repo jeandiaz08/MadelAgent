@@ -1,10 +1,10 @@
 import os
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_groq import ChatGroq
 
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 DEFAULT_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 

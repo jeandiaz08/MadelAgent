@@ -5,4 +5,5 @@ openai
 langchain
 langchain-core
 langchain-groq
+langgraph
 streamlit

@@ -9,7 +9,7 @@ BACKEND_PATH = os.path.join(BASE_DIR, "backend")
 sys.path.append(BACKEND_PATH)
 
 from core.services.feedback_service import save_feedback
-from core.services.history_service import get_history
+from core.services.history_service import get_feedback_summary, get_history
 from core.services.memory_service import clear_memory, get_recent_memory
 from core.services.usage_service import get_usage_summary
 from eval.evaluate import evaluate
@@ -42,10 +42,30 @@ st.markdown(
     .stTabs [aria-selected="true"] p { color: #c81e3a; }
     .stButton>button { background-color: #c81e3a; color: white; border: none; border-radius: 6px; }
     .stButton>button:hover { background-color: #9f1730; color: white; }
+    .feedback-card {
+        border: 1px solid #ead5dc;
+        border-radius: 8px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        background: #fff9fb;
+    }
+    .feedback-positive { color: #047857; font-weight: 700; }
+    .feedback-negative { color: #b91c1c; font-weight: 700; }
+    .feedback-pending { color: #92400e; font-weight: 700; }
+    .feedback-question { font-weight: 700; margin-top: 6px; }
+    .feedback-answer { color: #4b5563; font-size: .92rem; }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+
+def feedback_label(value):
+    if value is True:
+        return "POSITIVO"
+    if value is False:
+        return "NEGATIVO"
+    return "SIN CALIFICAR"
 
 
 if "history" not in st.session_state:
@@ -80,13 +100,20 @@ if st.sidebar.button("Evaluar sistema"):
         st.session_state["eval_score"] = score
     st.sidebar.success("Evaluacion completada")
 
-if st.sidebar.button("Ver feedback historico"):
+if st.sidebar.button("Resumen feedback"):
     st.session_state["show_feedback"] = not st.session_state.get("show_feedback", False)
 
 if st.session_state.get("show_feedback", False):
-    history = get_history()
-    for pregunta, respuesta, fecha in history:
+    feedback_summary = get_feedback_summary()
+    st.sidebar.metric("Total calificado", feedback_summary["total"])
+    st.sidebar.write(f"POSITIVO: {feedback_summary['positivos']}")
+    st.sidebar.write(f"NEGATIVO: {feedback_summary['negativos']}")
+    st.sidebar.divider()
+
+    history = get_history(limit=5)
+    for pregunta, respuesta, es_util, fecha in history:
         st.sidebar.write(f"{fecha}")
+        st.sidebar.write(f"Feedback: {feedback_label(es_util)}")
         st.sidebar.write(f"Pregunta: {pregunta}")
         st.sidebar.write(f"Respuesta: {respuesta}")
         st.sidebar.divider()
@@ -138,12 +165,22 @@ with tab_chat:
         st.caption("Fue util la ultima respuesta?")
         col1, col2 = st.columns([1, 6])
         with col1:
-            if st.button("Util"):
-                save_feedback(st.session_state.last_question, st.session_state.last_response, True)
+            if st.button("Util 👍"):
+                save_feedback(
+                    st.session_state.last_question,
+                    st.session_state.last_response,
+                    True,
+                    session_id=st.session_state.session_id,
+                )
                 st.toast("Gracias por el feedback.")
         with col2:
-            if st.button("No util"):
-                save_feedback(st.session_state.last_question, st.session_state.last_response, False)
+            if st.button("No util 👎"):
+                save_feedback(
+                    st.session_state.last_question,
+                    st.session_state.last_response,
+                    False,
+                    session_id=st.session_state.session_id,
+                )
                 st.toast("Tomamos nota para mejorar.")
 
 
@@ -187,6 +224,7 @@ with tab_observability:
                     "salida": row[3],
                     "total": row[4],
                     "costo_usd": float(row[5]),
+                    "feedback": feedback_label(row[6]),
                 }
                 for row in usage["recent"]
             ],
@@ -194,6 +232,55 @@ with tab_observability:
         )
     else:
         st.info("Aun no hay llamadas registradas en esta sesion.")
+
+    st.subheader("Evidencia de feedback historico")
+    feedback_history = get_history(limit=30)
+    feedback_summary = get_feedback_summary()
+
+    fcol1, fcol2, fcol3 = st.columns(3)
+    fcol1.metric("Total calificado", feedback_summary["total"])
+    fcol2.metric("Respuestas positivas", feedback_summary["positivos"])
+    fcol3.metric("Respuestas negativas", feedback_summary["negativos"])
+
+    if feedback_history:
+        def feedback_badge(value):
+            if value is True:
+                return '<span class="feedback-positive">POSITIVO</span>'
+            if value is False:
+                return '<span class="feedback-negative">NEGATIVO</span>'
+            return '<span class="feedback-pending">SIN CALIFICAR</span>'
+
+        for pregunta, respuesta, es_util, fecha in feedback_history[:8]:
+            respuesta_corta = respuesta.replace("\n", " ")
+            if len(respuesta_corta) > 260:
+                respuesta_corta = respuesta_corta[:260] + "..."
+
+            st.markdown(
+                f"""
+                <div class="feedback-card">
+                    <div>{feedback_badge(es_util)} | {fecha}</div>
+                    <div class="feedback-question">Pregunta: {pregunta}</div>
+                    <div class="feedback-answer">Respuesta: {respuesta_corta}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+        with st.expander("Ver tabla completa de feedback"):
+            st.dataframe(
+                [
+                    {
+                        "fecha": row[3],
+                        "feedback": feedback_label(row[2]),
+                        "pregunta": row[0],
+                        "respuesta": row[1],
+                    }
+                    for row in feedback_history
+                ],
+                width="stretch",
+            )
+    else:
+        st.info("Aun no hay feedback historico registrado.")
 
     st.subheader("Memoria reciente")
     memory_rows = get_recent_memory(st.session_state.session_id, limit=10)

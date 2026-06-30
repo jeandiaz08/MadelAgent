@@ -106,6 +106,7 @@ CREATE TABLE llm_usage (
     output_tokens INT,
     total_tokens INT,
     estimated_cost_usd NUMERIC(12, 8),
+    util BOOLEAN DEFAULT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

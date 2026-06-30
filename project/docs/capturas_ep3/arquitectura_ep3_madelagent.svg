@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 36px; font-weight: 800; fill: #111827; }
+      .box-title { font-family: Arial, sans-serif; font-size: 22px; font-weight: 800; fill: #111827; }
+      .sub-title { font-family: Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #374151; }
+      .text { font-family: Arial, sans-serif; font-size: 16px; fill: #111827; }
+      .small { font-family: Arial, sans-serif; font-size: 14px; fill: #374151; }
+      .tiny { font-family: Arial, sans-serif; font-size: 13px; fill: #374151; }
+      .num { font-family: Arial, sans-serif; font-size: 22px; font-weight: 800; fill: white; }
+      .main-arrow { stroke: #111827; stroke-width: 4; fill: none; marker-end: url(#arrow-main); }
+      .obs-arrow { stroke: #7c3aed; stroke-width: 3; fill: none; stroke-dasharray: 10 8; marker-end: url(#arrow-obs); }
+      .infra-arrow { stroke: #0284c7; stroke-width: 3; fill: none; stroke-dasharray: 10 8; marker-end: url(#arrow-infra); }
+      .muted-line { stroke: #9ca3af; stroke-width: 1; }
+    </style>
+    <marker id="arrow-main" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#111827"/>
+    </marker>
+    <marker id="arrow-obs" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrow-infra" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#0284c7"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#111827" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#f8fafc"/>
+  <text x="800" y="58" text-anchor="middle" class="title">Arquitectura EP3 - MadelAgent observable y seguro</text>
+
+  <!-- 1 User -->
+  <rect x="35" y="130" width="170" height="240" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="55" y="150" width="36" height="36" rx="7" fill="#2563eb"/>
+  <text x="73" y="176" text-anchor="middle" class="num">1</text>
+  <text x="105" y="175" class="box-title" fill="#1d4ed8">Usuario</text>
+  <circle cx="120" cy="235" r="32" fill="#2563eb"/>
+  <path d="M72 330 C78 286, 162 286, 168 330 Z" fill="#2563eb"/>
+  <text x="120" y="405" text-anchor="middle" class="text">Pregunta en</text>
+  <text x="120" y="428" text-anchor="middle" class="text">lenguaje natural</text>
+
+  <!-- 2 Streamlit -->
+  <rect x="255" y="130" width="220" height="240" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="275" y="150" width="36" height="36" rx="7" fill="#16a34a"/>
+  <text x="293" y="176" text-anchor="middle" class="num">2</text>
+  <text x="324" y="175" class="box-title" fill="#15803d">Streamlit UI</text>
+  <rect x="278" y="205" width="174" height="43" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="323" y="232" class="text">Chat</text>
+  <rect x="278" y="258" width="174" height="43" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="323" y="285" class="text">Feedback</text>
+  <rect x="278" y="311" width="174" height="43" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="323" y="338" class="text">Dashboard local</text>
+  <circle cx="300" cy="226" r="11" fill="#16a34a"/>
+  <path d="M294 277 L301 286 L316 267" stroke="#16a34a" stroke-width="5" fill="none"/>
+  <rect x="290" y="322" width="10" height="22" fill="#16a34a"/>
+  <rect x="306" y="314" width="10" height="30" fill="#16a34a"/>
+  <rect x="322" y="303" width="10" height="41" fill="#16a34a"/>
+
+  <!-- 3 Agent -->
+  <rect x="520" y="100" width="510" height="300" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2.5" filter="url(#shadow)"/>
+  <rect x="542" y="123" width="36" height="36" rx="7" fill="#7c3aed"/>
+  <text x="560" y="149" text-anchor="middle" class="num">3</text>
+  <text x="594" y="149" class="box-title" fill="#6d28d9">Agente Python + Groq</text>
+
+  <rect x="545" y="190" width="105" height="150" rx="10" fill="#ffffff" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="598" y="218" text-anchor="middle" class="sub-title">Memoria</text>
+  <text x="598" y="253" text-anchor="middle" class="small">contexto</text>
+  <text x="598" y="276" text-anchor="middle" class="small">reciente</text>
+  <text x="598" y="309" text-anchor="middle" font-family="Arial" font-size="42" fill="#7c3aed">DB</text>
+
+  <rect x="670" y="190" width="120" height="150" rx="10" fill="#ffffff" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="730" y="215" text-anchor="middle" class="sub-title">Prompt +</text>
+  <text x="730" y="238" text-anchor="middle" class="sub-title">esquema</text>
+  <text x="730" y="272" text-anchor="middle" class="small">reglas SQL</text>
+  <text x="730" y="297" text-anchor="middle" class="small">y contexto</text>
+
+  <rect x="810" y="190" width="120" height="150" rx="10" fill="#ffffff" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="870" y="218" text-anchor="middle" class="sub-title">Generacion</text>
+  <text x="870" y="241" text-anchor="middle" class="sub-title">SQL</text>
+  <rect x="838" y="270" width="64" height="45" rx="6" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="870" y="300" text-anchor="middle" font-family="Arial" font-size="24" font-weight="800" fill="#6d28d9">SQL</text>
+
+  <rect x="950" y="190" width="60" height="150" rx="10" fill="#ffffff" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="980" y="218" text-anchor="middle" class="sub-title">Resp.</text>
+  <text x="980" y="241" text-anchor="middle" class="sub-title">final</text>
+  <circle cx="980" cy="292" r="30" fill="#7c3aed"/>
+  <path d="M964 291 L975 303 L998 277" stroke="white" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <path d="M650 265 L668 265" class="main-arrow"/>
+  <path d="M790 265 L808 265" class="main-arrow"/>
+  <path d="M930 265 L948 265" class="main-arrow"/>
+
+  <!-- 4 Security -->
+  <rect x="1085" y="130" width="235" height="240" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="1105" y="150" width="36" height="36" rx="7" fill="#f97316"/>
+  <text x="1123" y="176" text-anchor="middle" class="num">4</text>
+  <text x="1153" y="157" class="box-title" fill="#ea580c">Validacion y</text>
+  <text x="1153" y="183" class="box-title" fill="#ea580c">seguridad SQL</text>
+  <text x="1130" y="232" class="text">Solo SELECT</text>
+  <text x="1130" y="270" class="text">Bloqueo escritura</text>
+  <text x="1130" y="308" class="text">Filtro datos sensibles</text>
+  <text x="1130" y="346" class="text">Manejo de errores</text>
+  <circle cx="1110" cy="226" r="11" fill="#16a34a"/>
+  <line x1="1103" y1="226" x2="1109" y2="233" stroke="white" stroke-width="4"/>
+  <line x1="1109" y1="233" x2="1120" y2="218" stroke="white" stroke-width="4"/>
+  <circle cx="1110" cy="264" r="12" fill="none" stroke="#dc2626" stroke-width="4"/>
+  <line x1="1102" y1="256" x2="1118" y2="272" stroke="#dc2626" stroke-width="4"/>
+  <rect x="1101" y="297" width="18" height="20" rx="3" fill="#f59e0b"/>
+  <rect x="1105" y="286" width="10" height="16" rx="5" fill="none" stroke="#f59e0b" stroke-width="4"/>
+  <path d="M1110 328 L1123 352 H1097 Z" fill="#ef4444"/>
+  <text x="1110" y="348" text-anchor="middle" font-family="Arial" font-size="16" font-weight="800" fill="white">!</text>
+
+  <!-- 5 Tools -->
+  <rect x="1365" y="130" width="200" height="240" rx="12" fill="#ecfeff" stroke="#0891b2" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="1385" y="150" width="36" height="36" rx="7" fill="#0891b2"/>
+  <text x="1403" y="176" text-anchor="middle" class="num">5</text>
+  <text x="1436" y="175" class="box-title" fill="#0e7490">Tools</text>
+  <text x="1410" y="232" class="text">get_schema</text>
+  <text x="1410" y="270" class="text">execute_readonly_sql</text>
+  <text x="1410" y="308" class="text">memory</text>
+  <text x="1410" y="346" class="text">cost/tokens</text>
+  <circle cx="1390" cy="226" r="10" fill="#0891b2"/>
+  <rect x="1380" y="258" width="20" height="20" rx="3" fill="#0891b2"/>
+  <path d="M1384 303 C1388 286,1397 286,1401 303 C1398 320,1386 320,1384 303 Z" fill="#0891b2"/>
+  <polyline points="1380,346 1388,336 1398,341 1404,326" stroke="#0891b2" stroke-width="4" fill="none"/>
+
+  <!-- 6 PostgreSQL -->
+  <rect x="1325" y="470" width="240" height="270" rx="12" fill="#fef2f2" stroke="#ef4444" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="1345" y="490" width="36" height="36" rx="7" fill="#ef4444"/>
+  <text x="1363" y="516" text-anchor="middle" class="num">6</text>
+  <text x="1395" y="515" class="box-title" fill="#dc2626">PostgreSQL local</text>
+  <ellipse cx="1375" cy="585" rx="42" ry="18" fill="#ef4444"/>
+  <rect x="1333" y="585" width="84" height="70" fill="#ef4444"/>
+  <ellipse cx="1375" cy="655" rx="42" ry="18" fill="#dc2626"/>
+  <line x1="1333" y1="610" x2="1417" y2="610" stroke="#fee2e2" stroke-width="3"/>
+  <line x1="1333" y1="635" x2="1417" y2="635" stroke="#fee2e2" stroke-width="3"/>
+  <text x="1430" y="565" class="text">inventario</text>
+  <text x="1430" y="596" class="text">ventas</text>
+  <text x="1430" y="627" class="text">pedidos</text>
+  <text x="1430" y="658" class="text">conversation_memory</text>
+  <text x="1430" y="689" class="text">llm_usage</text>
+  <text x="1430" y="720" class="text">feedback</text>
+
+  <!-- 7 Processing -->
+  <rect x="865" y="525" width="250" height="185" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="885" y="545" width="36" height="36" rx="7" fill="#3b82f6"/>
+  <text x="903" y="571" text-anchor="middle" class="num">7</text>
+  <text x="935" y="570" class="box-title" fill="#1d4ed8">Procesamiento</text>
+  <text x="900" y="620" class="text">Resultados tabulares</text>
+  <text x="900" y="652" class="text">Analisis de KPIs</text>
+  <text x="900" y="684" class="text">Recomendaciones</text>
+
+  <!-- 8 Response -->
+  <rect x="255" y="525" width="300" height="220" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="275" y="545" width="36" height="36" rx="7" fill="#16a34a"/>
+  <text x="293" y="571" text-anchor="middle" class="num">8</text>
+  <text x="325" y="570" class="box-title" fill="#15803d">Respuesta al usuario</text>
+  <rect x="280" y="610" width="250" height="40" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="305" y="636" class="text">Lenguaje natural</text>
+  <rect x="280" y="660" width="250" height="40" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="305" y="686" class="text">Contexto de negocio</text>
+  <rect x="280" y="710" width="250" height="25" rx="8" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="305" y="728" class="tiny">Calificacion: util / no util</text>
+
+  <!-- Observability -->
+  <rect x="585" y="515" width="255" height="215" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <text x="713" y="550" text-anchor="middle" class="box-title" fill="#6d28d9">Observabilidad EP3</text>
+  <text x="635" y="595" class="text">Tokens y costos</text>
+  <text x="635" y="627" class="text">Latencia P50/P99</text>
+  <text x="635" y="659" class="text">Error rate</text>
+  <text x="635" y="691" class="text">Feedback positivo/negativo</text>
+  <circle cx="612" cy="590" r="10" fill="#7c3aed"/>
+  <text x="612" y="596" text-anchor="middle" font-family="Arial" font-size="14" font-weight="800" fill="white">$</text>
+  <circle cx="612" cy="622" r="10" fill="#7c3aed"/>
+  <path d="M612 616 L612 623 L618 627" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M612 646 L624 670 H600 Z" fill="#7c3aed"/>
+  <text x="612" y="666" text-anchor="middle" font-family="Arial" font-size="13" font-weight="800" fill="white">!</text>
+  <circle cx="605" cy="690" r="9" fill="#7c3aed"/>
+  <circle cx="621" cy="690" r="9" fill="#7c3aed"/>
+
+  <!-- LangSmith -->
+  <rect x="1140" y="525" width="165" height="185" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1222" y="562" text-anchor="middle" class="box-title" fill="#6d28d9">LangSmith</text>
+  <text x="1180" y="606" class="text">Traces</text>
+  <text x="1180" y="638" class="text">Tools</text>
+  <text x="1180" y="670" class="text">Tokens</text>
+  <text x="1180" y="702" class="text">Errores</text>
+  <path d="M1160 587 C1165 570,1190 570,1195 587 C1208 588,1213 605,1198 612 H1160 C1146 612,1148 590,1160 587 Z" fill="#7c3aed"/>
+
+  <!-- Infrastructure -->
+  <rect x="150" y="810" width="1300" height="85" rx="16" fill="#ecfeff" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="10 8"/>
+  <text x="800" y="860" text-anchor="middle" font-family="Arial" font-size="23" font-weight="800" fill="#0369a1">Docker: App Streamlit + Backend Python + PostgreSQL + volumen persistente</text>
+
+  <!-- Main arrows -->
+  <path d="M205 250 L250 250" class="main-arrow"/>
+  <path d="M475 250 L515 250" class="main-arrow"/>
+  <path d="M1030 250 L1080 250" class="main-arrow"/>
+  <path d="M1320 250 L1360 250" class="main-arrow"/>
+  <path d="M1465 370 L1465 462" class="main-arrow"/>
+  <path d="M1325 605 L1122 605" class="main-arrow"/>
+  <path d="M865 615 L560 615" class="main-arrow"/>
+  <path d="M255 635 L115 635 L115 375" class="main-arrow"/>
+
+  <!-- Observability arrows -->
+  <path d="M365 370 L365 465 L710 465 L710 508" class="obs-arrow"/>
+  <path d="M775 400 L775 508" class="obs-arrow"/>
+  <path d="M1202 370 L1202 510" class="obs-arrow"/>
+  <path d="M1465 740 L1465 765 L1222 765 L1222 715" class="obs-arrow"/>
+  <path d="M842 620 L1135 620" class="obs-arrow"/>
+
+  <!-- Infra arrows -->
+  <path d="M405 745 L405 805" class="infra-arrow"/>
+  <path d="M713 730 L713 805" class="infra-arrow"/>
+  <path d="M1465 740 L1465 805" class="infra-arrow"/>
+
+  <!-- Legend -->
+  <rect x="420" y="925" width="760" height="50" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+  <line x1="455" y1="950" x2="530" y2="950" class="main-arrow"/>
+  <text x="550" y="957" class="text">Flujo principal</text>
+  <line x1="710" y1="950" x2="785" y2="950" class="obs-arrow"/>
+  <text x="805" y="957" class="text">Observabilidad</text>
+  <line x1="970" y1="950" x2="1045" y2="950" class="infra-arrow"/>
+  <text x="1065" y="957" class="text">Infraestructura</text>
+</svg>
