@@ -10,6 +10,15 @@ MODEL_PRICING_USD_PER_MILLION = {
 }
 
 
+def _ensure_usage_feedback_column(cursor):
+    cursor.execute(
+        """
+        ALTER TABLE llm_usage
+        ADD COLUMN IF NOT EXISTS util BOOLEAN DEFAULT NULL
+        """
+    )
+
+
 def estimate_cost(input_tokens=0, output_tokens=0, model=DEFAULT_MODEL):
     pricing = MODEL_PRICING_USD_PER_MILLION.get(
         model,
@@ -31,6 +40,7 @@ def save_usage(session_id, question, usage):
     try:
         conn = get_connection()
         cursor = conn.cursor()
+        _ensure_usage_feedback_column(cursor)
         cursor.execute(
             """
             INSERT INTO llm_usage (
@@ -60,6 +70,8 @@ def get_usage_summary(session_id=None, limit=20):
     try:
         conn = get_connection()
         cursor = conn.cursor()
+        _ensure_usage_feedback_column(cursor)
+        conn.commit()
 
         if session_id:
             cursor.execute(
@@ -92,7 +104,7 @@ def get_usage_summary(session_id=None, limit=20):
 
         cursor.execute(
             """
-            SELECT fecha, question, input_tokens, output_tokens, total_tokens, estimated_cost_usd
+            SELECT fecha, question, input_tokens, output_tokens, total_tokens, estimated_cost_usd, util
             FROM llm_usage
             WHERE (%s IS NULL OR session_id = %s)
             ORDER BY fecha DESC

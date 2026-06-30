@@ -27,6 +27,17 @@ def is_readonly_query(query):
     return cleaned.startswith("SELECT") and not any(word in cleaned for word in forbidden)
 
 
+def violates_sensitive_data_policy(query):
+    cleaned = query.strip().rstrip(";").upper()
+    sensitive_tables = ["EMPLEADOS", "TURNOS"]
+    aggregate_terms = ["COUNT(", "SUM(", "AVG(", "MIN(", "MAX("]
+
+    references_sensitive_table = any(table in cleaned for table in sensitive_tables)
+    uses_aggregate = any(term in cleaned for term in aggregate_terms)
+
+    return references_sensitive_table and not uses_aggregate
+
+
 @tool
 def get_schema() -> str:
     """Devuelve el esquema disponible para generar consultas SQL sobre MADEL."""
@@ -38,6 +49,13 @@ def execute_readonly_sql(query: str):
     """Ejecuta una consulta SELECT segura sobre PostgreSQL y devuelve filas en formato dict."""
     if not is_readonly_query(query):
         return {"error": "Solo se permiten consultas SELECT de lectura."}
+    if violates_sensitive_data_policy(query):
+        return {
+            "error": (
+                "Politica de seguridad: los datos personales de empleados o turnos "
+                "solo se pueden consultar de forma agregada."
+            )
+        }
     return execute_query(query)
 
 

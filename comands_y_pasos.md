@@ -1,4 +1,95 @@
-# V1.2 (EP2) ACTUAL
+# V1.3 (EP3) ACTUAL
+
+## Cambios principales
+
+- Observabilidad externa con LangSmith: trazas, latencia P50/P99, tasa de errores, tokens y uso de herramientas.
+- Dashboard local en Streamlit con costos estimados, uso reciente y feedback historico.
+- Feedback persistente en PostgreSQL para registrar respuestas utiles y no utiles.
+- Columna `util` en `llm_usage` para relacionar uso de tokens con calidad percibida.
+- Validacion de SQL de solo lectura con `execute_readonly_sql`.
+- Controles basicos para limitar consultas sobre datos sensibles.
+
+## Levantar todo
+
+Ubicarse en:
+
+```bash
+cd project/docker
+```
+
+Levantar aplicacion y base de datos:
+
+```bash
+docker-compose up --build
+```
+
+Abrir:
+
+```text
+http://localhost:8501
+```
+
+## Reiniciar limpio si cambio el modelo de datos
+
+Usar esto solo si se necesita recrear tablas y datos iniciales:
+
+```bash
+cd project/docker
+docker-compose down -v
+docker-compose up --build
+```
+
+## Reiniciar solo la app sin tocar la base de datos
+
+Util para cambios de codigo o cambio de API key en `.env`:
+
+```bash
+docker restart madel_app
+```
+
+Si no toma los cambios:
+
+```bash
+docker compose -f project/docker/docker-compose.yml up -d --no-deps app
+```
+
+Si ademas se necesita reconstruir la imagen:
+
+```bash
+docker compose -f project/docker/docker-compose.yml up -d --no-deps --build app
+```
+
+## Revisar logs de la app
+
+```bash
+docker logs --tail 80 madel_app
+```
+
+## Entrar a PostgreSQL
+
+```bash
+docker exec -it madel_postgres psql -U admin -d madel_db
+```
+
+Comandos utiles dentro de PostgreSQL:
+
+```sql
+\dt
+SELECT COUNT(*) FROM feedback;
+SELECT util, COUNT(*) FROM llm_usage GROUP BY util;
+```
+
+## Variables recomendadas en `.env`
+
+```bash
+GROQ_API_KEY=tu_api_key
+GROQ_MODEL=llama-3.3-70b-versatile
+LANGSMITH_TRACING=true
+LANGSMITH_API_KEY=tu_langsmith_api_key
+LANGSMITH_PROJECT=MadelAgent
+```
+
+# V1.2 (EP2) Anterior al (29/6/2026)
 
 ## Cambios principales
 

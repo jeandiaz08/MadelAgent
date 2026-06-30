@@ -4,6 +4,17 @@ Agente inteligente para consultar y analizar datos operacionales de la empresa M
 
 El sistema combina un flujo Text-to-SQL con memoria conversacional, herramientas de agente, estimacion de costos por token, evaluacion automatica y analitica historica de ventas e inventario.
 
+## Version actual - EP3
+
+Para la Evaluacion Parcial 3 se incorporaron mejoras orientadas a observabilidad, trazabilidad, seguridad y evidencia de calidad:
+
+- Integracion con LangSmith para registrar trazas, latencia, errores, uso de herramientas y consumo de tokens.
+- Dashboard local en Streamlit con metricas de uso, costos estimados, uso reciente y feedback historico.
+- Persistencia de feedback en PostgreSQL para evidenciar respuestas utiles y no utiles.
+- Registro de tokens y costo teorico por conversacion en la tabla `llm_usage`.
+- Validacion de consultas SQL de solo lectura mediante `execute_readonly_sql`.
+- Controles basicos para limitar consultas sobre datos sensibles y reforzar el uso responsable del agente.
+
 ## Objetivo
 
 MADEL necesita acceder a informacion de stock, ventas, pedidos, sucursales y empleados sin depender de usuarios expertos en SQL. MadelAgent permite que un usuario consulte la base de datos en lenguaje natural y reciba una respuesta interpretada como apoyo a la toma de decisiones.
@@ -166,9 +177,46 @@ La pestana **Observabilidad** muestra:
 - tokens estimados;
 - costo teorico acumulado;
 - llamadas recientes;
-- memoria reciente.
+- memoria reciente;
+- feedback historico positivo, negativo y sin calificar.
 
-Como mejora futura, el proyecto puede conectarse a LangSmith activando trazas de LangChain para visualizar pasos, entradas, salidas y decisiones del agente en la nube.
+Adicionalmente, el proyecto se conecta a LangSmith mediante variables de entorno para visualizar trazas, latencia P50/P99, tasa de errores, consumo de tokens y uso de herramientas del agente.
+
+Variables sugeridas para LangSmith en `.env`:
+
+```bash
+LANGSMITH_TRACING=true
+LANGSMITH_API_KEY=tu_langsmith_api_key
+LANGSMITH_PROJECT=MadelAgent
+```
+
+## Comandos utiles
+
+Levantar todo desde cero:
+
+```bash
+cd project/docker
+docker-compose down -v
+docker-compose up --build
+```
+
+Reiniciar solo la app sin tocar la base de datos:
+
+```bash
+docker restart madel_app
+```
+
+Levantar solo la app sin reconstruir:
+
+```bash
+docker compose -f project/docker/docker-compose.yml up -d --no-deps app
+```
+
+Reconstruir solo la app:
+
+```bash
+docker compose -f project/docker/docker-compose.yml up -d --no-deps --build app
+```
 
 ## Referencias
 
